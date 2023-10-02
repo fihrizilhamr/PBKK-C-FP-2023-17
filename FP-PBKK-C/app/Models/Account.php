@@ -15,6 +15,7 @@ class Account extends Model
         'Alamat',
         'NHP',
         'Gender',
+        'Password',
     ];
     protected $casts = [
         'Password' => 'hashed',

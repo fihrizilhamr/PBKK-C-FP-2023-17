@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Account', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('Email');
-            $table->string('Password');
+            $table->string('Password')->default('');
             $table->string('Nama');
             $table->date('TL');
             $table->string('Alamat');

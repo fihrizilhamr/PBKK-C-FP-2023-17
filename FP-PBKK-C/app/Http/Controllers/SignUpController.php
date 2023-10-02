@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Account;
 
@@ -32,7 +33,7 @@ class SignUpController extends Controller
             'Gender' => $request->input('Gender'),
         ];
         Account::create($results);
-        return view('signup-result');
+        return view('signup-result', ['results' => $results['Nama']]);
     }    
     
 

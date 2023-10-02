@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignUpController;
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,5 @@ Route::get('/signup', [SignUpController::class, 'showForm'])->name('signup');
 Route::post('/signup', [SignUpController::class, 'submitForm']);
 
 // auth sementara, cuman view all data table
-Route::get('/auth', function () {
-    return view('auth');
-})->name('auth');
+Route::get('/auth/listusers', [AuthController::class, 'showUsers'])->name('list-users');
 // Route::get('/signup/result', [SignUpController::class, 'formResult'])->name('signup/result');

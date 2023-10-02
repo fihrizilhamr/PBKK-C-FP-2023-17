@@ -25,16 +25,41 @@ https://www.youtube.com/watch?v=7uEqQx4S50E-->
             <div class="logo">
                 <a href ="{{ route('home') }}">GoGym</a>
             </div>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search...">
+            </div>
         </div>
     </nav>
-    <div class="wrapper">
-    @foreach ($users as $user)
+    <div class="listTable">
+    <!-- Assuming $users is an array of user objects passed from the controller -->
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Nama</th>
+                <th>Tanggal Lahir</th>
+                <th>Alamat</th>
+                <th>No. HP</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->Nama }}</td>
                     <td>{{ $user->Email }}</td>
-                    <!-- Add other columns as needed -->
+                    <td>{{ $user->Password }}</td>
+                    <td>{{ $user->Nama }}</td>
+                    <td>{{ $user->TL }}</td>
+                    <td>{{ $user->Alamat }}</td>
+                    <td>{{ $user->NHP }}</td>
+                    <td>{{ $user->Gender }}</td>
                 </tr>
             @endforeach
+        </tbody>
+    </table>
+
     </div>
 </body>
 </html>

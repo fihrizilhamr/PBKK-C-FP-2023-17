@@ -456,3 +456,71 @@ a.tombol-biru:hover {
     color: #213555;
 }
 
+.signup_result h1 {
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    color: #213555;
+    text-align: center;
+}
+
+.signup_result h2 {
+    font-size: 15px;
+    font-weight: normal;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #4F709C;
+    text-align: center;
+}
+
+.search-container {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+input[type="text"]{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; 
+    align-items:end;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+
+.listTable {
+    width: 1240px;
+    margin: auto;
+    position: relative;
+    overflow-x: auto;
+}
+
+#userTable {
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#userTable th, #userTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#userTable th {
+    background-color: #f2f2f2;
+}
+
+
