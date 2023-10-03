@@ -4,7 +4,7 @@
 
 Repository ini dibentuk untuk menyelesaikan tugas akhir Pemrograman Berbasis Kerangka Kerja.
 
-Anggota Kelompok D07:
+Anggota Kelompok 17:
 | Nama | NRP |
 | :---: | :---: |
 | Fihriz Ilham Rabbany | 5025211040 |
