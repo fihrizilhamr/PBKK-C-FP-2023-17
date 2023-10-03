@@ -21,19 +21,14 @@ class AccountFactory extends Factory
 
         $gender = $this->faker->randomElement(['male', 'female']);
         $nama = $this->faker->name($gender);
-        //$email = str_replace(' ', '', $nama) . '@mail.com';
-
-        $tl = $this->faker->dateTimeBetween('1970-01-01', '2010-12-31')->format('Y-m-d');
-
         return [
-            'Email' => str_replace(' ', '', $nama) . '@mail.com',
+            'Email' => strtolower(str_replace(' ', '', $nama)) . '@mail.com',
             'Nama' => $nama,
-            'TL' => $tl,
+            'TL' => $this->faker->dateTimeBetween('1970-01-01', '2010-12-31')->format('Y-m-d'),
             'Alamat' => $this->faker->address,
-            'NHP' => $this->faker->phoneNumber,
-            'Gender' => $gender,
+            'NHP' => '+62-8' . $this->faker->numerify('##') .'-'. $this->faker->numerify('####') .'-'. $this->faker->numerify('####'),
+            'Gender' => ($gender == 'male')?'Laki-laki':'Perempuan',
             'Password' => bcrypt($this->faker->password),
         ];
     }
-
 }
