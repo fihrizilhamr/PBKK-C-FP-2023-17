@@ -1,10 +1,3 @@
-<!-- reference
-https://colorhunt.co/palette/f0f0f02135554f709ce5d283
-https://www.youtube.com/watch?v=McPdzhLRzCg
-https://www.youtube.com/watch?v=5JwWqjd4e9o 
-https://www.youtube.com/watch?v=WVOmmc0UTiM
-https://www.youtube.com/watch?v=7uEqQx4S50E-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +29,7 @@ https://www.youtube.com/watch?v=7uEqQx4S50E-->
     <table id="userTable">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Email</th>
                 <th>Password</th>
                 <th>Nama</th>
@@ -43,11 +37,14 @@ https://www.youtube.com/watch?v=7uEqQx4S50E-->
                 <th>Alamat</th>
                 <th>No. HP</th>
                 <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($users as $user)
                 <tr>
+                    <td>{{ $user->id }}</td>
                     <td>{{ $user->Email }}</td>
                     <td>{{ $user->Password }}</td>
                     <td>{{ $user->Nama }}</td>
@@ -55,6 +52,17 @@ https://www.youtube.com/watch?v=7uEqQx4S50E-->
                     <td>{{ $user->Alamat }}</td>
                     <td>{{ $user->NHP }}</td>
                     <td>{{ $user->Gender }}</td>
+                    <td>
+                        <form action="{{ route('user.edit', ['id' => $user->id]) }}" method="get">
+                            <button type="submit">Edit</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ route('user.delete', ['id' => $user->id]) }}" method="get" onsubmit="return confirm('Are you sure you want to delete this user?')">
+                            @csrf
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

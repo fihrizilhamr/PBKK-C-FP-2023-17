@@ -26,7 +26,7 @@ class AccountFactory extends Factory
             'Nama' => $nama,
             'TL' => $this->faker->dateTimeBetween('1970-01-01', '2010-12-31')->format('Y-m-d'),
             'Alamat' => $this->faker->address,
-            'NHP' => '+62-8' . $this->faker->numerify('##') .'-'. $this->faker->numerify('####') .'-'. $this->faker->numerify('####'),
+            'NHP' => $this->faker->phoneNumber,
             'Gender' => ($gender == 'male')?'Laki-laki':'Perempuan',
             'Password' => bcrypt($this->faker->password),
         ];
