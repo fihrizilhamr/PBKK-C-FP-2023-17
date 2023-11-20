@@ -524,3 +524,44 @@ input[type="text"]{
 }
 
 
+#koleksi {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+
+.trainer {
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #4F709C;
+    margin: 20px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.trainer img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.trainer h4 {
+    font-size: 1.2rem;
+    color: #213555;
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;         /* Hide overflowing content */
+    text-overflow: ellipsis;  /* Display an ellipsis (...) when content overflows */
+}
+
+.trainer p {
+    font-size: 0.9rem;
+    color: #4F709C;
+    margin-top: 5px;
+    white-space: nowrap;      /* Prevent line breaks */
+    overflow: hidden;         /* Hide overflowing content */
+    text-overflow: ellipsis;  /* Display an ellipsis (...) when content overflows */
+}

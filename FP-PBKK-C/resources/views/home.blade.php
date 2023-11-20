@@ -1,9 +1,3 @@
-<!-- reference
-https://colorhunt.co/palette/f0f0f02135554f709ce5d283
-https://www.youtube.com/watch?v=McPdzhLRzCg
-https://www.youtube.com/watch?v=5JwWqjd4e9o 
-https://www.youtube.com/watch?v=WVOmmc0UTiM
-https://www.youtube.com/watch?v=7uEqQx4S50E-->
 
 <!DOCTYPE html>
 <html lang="en">

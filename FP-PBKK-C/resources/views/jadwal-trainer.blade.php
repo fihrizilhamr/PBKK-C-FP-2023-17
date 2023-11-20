@@ -18,13 +18,30 @@
         <div class="wrapper">
             <!-- logo -->
             <div class="logo">
-                <a href ="{{ route('home') }}">GoGym</a>
+                <a href ="{{ route('list-trainers') }}">GoGym</a>
             </div>
         </div>
     </nav>
-    <div class="signup_result">
-        <h1>Selamat Datang di GoGym, {{ $results }}!</h1><br>
-        <h2>Akun Anda berhasil dibuat. Selamat bergabung!<br>Anda sekarang dapat masuk dan mengeksplorasi fitur-fitur kami.<br>Jangan ragu untuk menghubungi kami jika ada pertanyaan atau masalah.</h2>
+    <div class="listTable">
+    <!-- Assuming $users is an array of user objects passed from the controller -->
+    <table id="userTable">
+    <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+        <tbody>
+            @foreach ($trainer->getAttributes() as $property => $value)
+                <tr>
+                    <td><strong>{{ $property }}:</strong></td>
+                    <td>{{ $value }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+
     </div>
 </body>
 </html>

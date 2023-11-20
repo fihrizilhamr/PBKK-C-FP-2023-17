@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\TrainerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,7 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/update/{id}', [AuthController::class, 'update'])->name('user.update');
     Route::get('/delete/{id}', [AuthController::class,'delete'])->name('user.delete');
 
-
+    // Trainer list
+    Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
+    Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
 
 });
 
