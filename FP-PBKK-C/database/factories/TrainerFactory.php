@@ -3,19 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Account;
-
+use App\Models\Trainer;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Account>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Trainer>
  */
-class AccountFactory extends Factory
+class TrainerFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    protected $model = Account::class;
+    protected $model = Trainer::class;
 
     public function definition(){
 
@@ -29,6 +28,8 @@ class AccountFactory extends Factory
             'NHP' => $this->faker->phoneNumber,
             'Gender' => ($gender == 'male')?'Laki-laki':'Perempuan',
             'Password' => bcrypt($this->faker->password),
+            'Lokasi' => $this->faker->address,
+            'Foto' => $this->faker->word,
         ];
     }
 }
