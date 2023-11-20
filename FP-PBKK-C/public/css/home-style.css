@@ -565,3 +565,14 @@ input[type="text"]{
     overflow: hidden;         /* Hide overflowing content */
     text-overflow: ellipsis;  /* Display an ellipsis (...) when content overflows */
 }
+.listTable {
+    display: flex;
+    align-items: center;
+}
+
+.listTable img {
+    height: 100%; /* Set the image width to 100% of its container */
+    /* max-width: 100px; Set a maximum width if needed */
+    max-height: 150px;
+    margin-right: 20px;
+}

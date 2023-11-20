@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
     Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
 
+
+    Route::post('/payment/{id}', [PaymentController::class, 'createPayment']);
+    Route::get('/payment-status/{id}', [PaymentController::class, 'showStatus']);
 });
 
 require __DIR__.'/auth.php';

@@ -22,7 +22,6 @@
             </div>
         </div>
     </nav>
-    <div class="listTable">
     <!-- Assuming $users is an array of user objects passed from the controller -->
     <table id="userTable">
     <thead>
@@ -39,9 +38,36 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
-
+    </table><br><br>
+    <div class="listTable">
+    <img src="{{ asset('storage/trainer_images/' . $trainer->Foto) }}" alt="{{ asset('storage/trainer_images/' . $trainer->Foto) }}">
+    <br>
+    <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Schedule</th>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($trainer->schedules as $schedule)
+                    <tr>
+                        <td>{{ $schedule->id }}</td>
+                        <td>{{ $schedule->day }}</td>
+                        <td>{{ $schedule->start_time }}</td>
+                        <td>{{ $schedule->end_time }}</td>
+                        <td>
+                            <input type="checkbox" name="selected_schedules[]" value="{{ $schedule->id }}">
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
     </div>
+    </div><br><br>
 </body>
 </html>

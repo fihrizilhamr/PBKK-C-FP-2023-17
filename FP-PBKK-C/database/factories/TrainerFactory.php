@@ -46,6 +46,6 @@ class TrainerFactory extends Factory
         $result = Storage::put('public/trainer_images/' . $filename, $imageContent);
     
         // Return the path to the saved image
-        return 'trainer_images/' . $filename;
+        return $filename;
     }
 }

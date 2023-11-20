@@ -14,6 +14,9 @@ class TrainerSeeder extends Seeder
     public function run(): void
     {
         //
-        Trainer::factory(10)->create();
+        Trainer::factory()
+        ->count(10)
+        ->hasSchedules(3) // You can adjust the number of schedules here
+        ->create();
     }
 }
