@@ -9,6 +9,10 @@ use App\Models\Payment;
 
 class PaymentController extends Controller
 {
+    public function showCheckout(){
+        return view("checkout", []);
+    }
+
     public function __construct() {
        Xendit::setApiKey("xnd_development_cZzH2SbZQ98KkfhCQVyVXtcjxAmUp08MpHIf1wapxoaQxkgshD7tMJE84ezKvi");
     }

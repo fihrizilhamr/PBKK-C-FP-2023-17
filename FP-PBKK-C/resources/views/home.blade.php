@@ -65,53 +65,30 @@
         </section>
         <!-- blog -->
         <section id="blog">
-            <div class="blog-part">
-                <div class="blog-heading">
-                    <span>Recent Post</span>
-                    <h3>Blog</h3>
-                </div>
-                <!-- box 1 -->
-                <div class="blog-container">
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img src="https://plus.unsplash.com/premium_photo-1663036263525-3059e0c47b96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3ltfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Blog">
-                        </div>
-                        <div class="blog-text">
-                            <span>10 September 2023 / Happy Gym Buddy</span>
-                            <a href="#" class="blog-title">Bagaimana Memiliki Teman Gym Membantu Anda Untuk Lebih Produktif</a>
-                            <p>Selain membantu meningkatkan suasana hati, dukungan teman bisa memotivasi diri menjalankan pola hidup yang lebih sehat.</p>
-                            <a href="#">Baca lebih lanjut...</a>
-                        </div>
-                    </div>
-                    <!-- box 2 -->
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Blog">
-                        </div>
-                        <div class="blog-text">
-                            <span>11 September 2023 / Happy Gym Buddy</span>
-                            <a href="#" class="blog-title">10 Dumbbell Set Terbaik - Ditinjau oleh Fitness Coach (Terbaru Tahun 2023)</a>
-                            <p>Dumbbell memiliki banyak manfaat untuk digunakan sebagai rekan workout Anda. Anda bisa memakainya untuk membentuk berbagai otot, mulai dari abdomen hingga otot punggung. Dumbbell juga bisa digunakan untuk olahraga bagi lansia dan Anda yang sedang diet.</p>
-                            <a href="#">Baca lebih lanjut...</a>
-                        </div>
-                    </div>
+    <div class="blog-part">
+        <div class="blog-heading">
+            <span>Recent Post</span>
+            <h3>Blog</h3>
+        </div>
 
-                    <!-- box 3 -->
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z3ltfGVufDB8MHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Blog">
-                        </div>
-                        <div class="blog-text">
-                            <span>12 September 2023 / Happy Gym Buddy</span>
-                            <a href="#" class="blog-title">Butuh Berapa Lama Hingga Otot Terbentuk Karena Olahraga?</a>
-                            <p>Berapa lama otot terbentuk setelah mulai olahraga? Pertumbuhan otot bisa memakan waktu berminggu-minggu atau berbulan-bulan. Kebanyakan orang sehat bisa menambah massa otot 0,5-1 kg per bulan. Pada dasarnya, latihan beban selama 20-30 menit yang dilakukan 2-3 kali seminggu sudah cukup untuk membantu pembentukan otot.</p>
-                            <a href="#">Baca lebih lanjut...</a>
-                        </div>
+        <div class="blog-container">
+            @foreach ($latestArticles as $article)
+                <div class="blog-box">
+                    <div class="blog-img">
+                        <img src="{{ asset('storage/article_images/' . $article->Foto) }}" alt="{{ $article->Judul }}">
                     </div>
-
+                    <div class="blog-text">
+                        <span>{{ $article->created_at->format('d F Y') }} / Happy Gym Buddy</span>
+                        <a href="#" class="blog-title">{{ $article->Judul }}</a>
+                        <p>{{ $article->Text }}</p>
+                        <a href="#">Baca lebih lanjut...</a>
+                    </div>
                 </div>
-            </div>
-        </section>
+            @endforeach
+        </div>
+    </div>
+</section>
+
         <!-- community -->
         <section id="community">
             <div class="blog-part">

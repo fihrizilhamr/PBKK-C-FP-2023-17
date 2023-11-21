@@ -28,4 +28,9 @@ class Trainer extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

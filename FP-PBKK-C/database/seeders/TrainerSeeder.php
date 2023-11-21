@@ -17,6 +17,7 @@ class TrainerSeeder extends Seeder
         Trainer::factory()
         ->count(10)
         ->hasSchedules(3) // You can adjust the number of schedules here
+        ->hasArticles(3)
         ->create();
     }
 }

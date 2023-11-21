@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\PaymentController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('home');
+    $latestArticles = Article::latest()->take(3)->get();
+    
+    return view('home', ['latestArticles' => $latestArticles]);
 })->name('home');
 
 Route::get('/signup', [SignUpController::class, 'showForm'])->name('signup');
@@ -46,7 +50,8 @@ Route::middleware('auth')->group(function () {
     // Trainer list
     Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
     Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
-
+    
+    Route::post('/checkout', [PaymentController::class, 'showCheckout'])->name('checkout-trainer');
 
     Route::post('/payment/{id}', [PaymentController::class, 'createPayment']);
     Route::get('/payment-status/{id}', [PaymentController::class, 'showStatus']);
