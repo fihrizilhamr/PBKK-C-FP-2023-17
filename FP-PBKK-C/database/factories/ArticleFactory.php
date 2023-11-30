@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
         return [
             'Foto' => $imagePath,
             'Judul' => implode(' ', $words),
-            'Text' => $this->faker->paragraphs(1, true),
+            'Text' => $this->faker->paragraphs(random_int(1, 5), true),
         ];
     }
 

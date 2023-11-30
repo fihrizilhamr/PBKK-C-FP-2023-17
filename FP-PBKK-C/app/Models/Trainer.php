@@ -10,13 +10,6 @@ class Trainer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Email',
-        'Nama',
-        'TL',
-        'Alamat',
-        'NHP',
-        'Gender',
-        'Password',
         'Lokasi',
         'Foto',
     ];
@@ -24,6 +17,11 @@ class Trainer extends Model
         'Password' => 'hashed',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function schedules()
     {
         return $this->hasMany(Schedule::class);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('trainer_id')->references('id')->on('trainers')->onDelete('cascade');
             $table->string('Foto');
             $table->string('Judul');
-            $table->string('Text');
+            $table->text('Text');
             $table->timestamps();
         });
     }

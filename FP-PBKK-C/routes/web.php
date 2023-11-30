@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignUpController;
@@ -32,6 +33,15 @@ Route::post('/signup', [SignUpController::class, 'submitForm']);
 Route::get('/auth', function () {
     return view('welcome');
 });
+
+Route::get('/listarticles', [ArticleController::class, 'showArticles'])->name('list-articles');
+Route::get('/viewarticle/{id}', [ArticleController::class, 'view'])->name('article.view');
+Route::get('/editarticle/{id}', [ArticleController::class, 'edit'])->name('article.edit');
+Route::post('/updatearticle/{id}', [ArticleController::class, 'update'])->name('article.update');
+Route::get('/deletearticle/{id}', [ArticleController::class,'delete'])->name('article.delete');
+
+Route::get('/createarticle/{id}', [ArticleController::class,'createArticle'])->name('article.create');
+Route::post('/createarticle/{id}', [ArticleController::class,'submitArticle'])->name('article.submit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
