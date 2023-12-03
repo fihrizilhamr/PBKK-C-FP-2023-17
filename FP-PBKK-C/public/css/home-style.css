@@ -631,3 +631,110 @@ input[type="text"]{
 .listarticles p {
     color: #555;
 }
+
+.listarticles .article-actions {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.listarticles .create-button,
+.listarticles .edit-button,
+.listarticles .delete-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.listarticles .edit-button {
+    background-color: #1E90FF; /* Ganti warna sesuai kebutuhan */
+    border: 1px solid #1E90FF;
+}
+
+.listarticles .delete-button {
+    background-color: #FF4500; /* Ganti warna sesuai kebutuhan */
+    border: 1px solid #FF4500;
+}
+
+/* Style dasar untuk container */
+.createarticle {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style untuk judul form */
+.createarticle h2 {
+    color: #333;
+}
+
+/* Style untuk pesan kepada pengguna */
+.createarticle p {
+    color: #555;
+}
+
+/* Style untuk formulir */
+.createarticle form {
+    margin-top: 20px;
+}
+
+/* Style untuk label */
+.createarticle label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style untuk input teks dan textarea */
+.createarticle input[type="text"],
+.createarticle textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Style untuk input file */
+.createarticle input[type="file"] {
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+/* Style untuk tombol submit */
+.createarticle button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style saat kursor berada di atas tombol */
+.createarticle button:hover {
+    background-color: #45a049;
+}
+
+/* Style untuk pesan error jika diperlukan */
+.createarticle .error-message {
+    color: #ff0000;
+    margin-top: 6px;
+}
+
+.createarticle img {
+    max-width: 100%; /* Agar gambar tidak melewati lebar elemen */
+    height: auto; /* Biarkan tinggi gambar disesuaikan untuk menjaga rasio aspek */
+    display: block; /* Hilangkan whitespace ekstra di sekitar gambar */
+    margin: 0 auto; /* Membuat gambar berada di tengah */
+    margin-bottom: 20px; /* Atur spasi bawah jika diinginkan */
+}

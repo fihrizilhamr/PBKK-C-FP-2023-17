@@ -90,13 +90,13 @@
 </section>
 
         <!-- community -->
-        <section id="community">
+        <!-- <section id="community">
             <div class="blog-part">
                 <div class="blog-heading">
                     <span>Community: To Be Updated</span>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!-- contact -->
         <section id="contact">
             <div class="blog-heading">

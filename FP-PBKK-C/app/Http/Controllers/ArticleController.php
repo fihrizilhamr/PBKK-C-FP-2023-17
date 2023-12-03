@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Trainer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -13,6 +16,18 @@ class ArticleController extends Controller
         return view('list-articles', compact('articles'));
     }
 
+    public function myArticle()
+    {
+        // Mengambil instance pengguna yang terautentikasi beserta relasinya dengan Trainer
+        $trainer = User::with('trainer')->find(Auth::id());
+    
+        // Mengambil artikel yang terkait dengan trainer_id dari pengguna terautentikasi
+        $articles = Article::where('trainer_id', $trainer->trainer->id)->get();
+    
+        return view('list-myarticles', compact('articles'));
+    }
+    
+
     public function view($id)
     {
         $article = Article::find($id);
@@ -20,45 +35,76 @@ class ArticleController extends Controller
         return view('view-article', compact('article', 'trainer'));
     }
 
-    public function edit($id)
+    public function editArticle($id)
     {
-        $articles = Article::find($id);
-        return view('edit-articles', compact('articles'));
+        $article = Article::find($id);
+        $trainer = User::find(Trainer::find($article->trainer_id)->user_id);
+        return view('edit-articles', compact('article', 'trainer'));
     }
 
-    public function update(Request $request, $id)
+    public function updateArticle(Request $request, $id)
     {
         // Validate the request data
-        $validatedData = $request->validate([
-            'Email' => 'required|email|max:255',
-            'Password' => 'required|string|min:8',
-            'Nama' => 'required|string|max:255',
-            'TL' => 'required|date',
-            'Alamat' => 'required|string|max:510',
-            'NHP' => 'required|numeric', 
-            'Gender' => 'required|in:Laki-laki,Perempuan', 
+        $request->validate([
+            'Foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'Judul' => 'required|string|max:255',
+            'Text' => 'required|string',
         ]);
+        $imageContent = file_get_contents($request->file('Foto'));
+    
+        // Generate a unique filename for the image
+        $filename = 'article_' . uniqid() . '.jpg';
+    
+        // Save the image to the storage disk
+        Storage::put('public/article_images/' . $filename, $imageContent);
+        
+        $results = [
+            'Foto' => $filename,
+            'Judul' => $request->input('Judul'),
+            'Text' => $request->input('Text')
+        ];
+        Article::find($id)->update($results);
 
-        // Update the user in the database
-        Article::where('id', $id)->update($validatedData);
-
-        return redirect()->route('list-articles'); // Redirect to home or wherever you want
+        return redirect()->route('list-myarticles');
     }
 
-    public function delete($id)
+    public function deleteArticle($id)
     {
         // Delete the user from the database
         Article::destroy($id);
 
-        return redirect()->route('list-articles'); // Redirect to home or wherever you want
+        return redirect()->route('list-myarticles'); // Redirect to home or wherever you want
     }
 
-    public function createArticle($id)
+    public function createArticle()
     {
-
+        $trainer = User::has('trainer')->with('trainer')->find(Auth::id());
+        return view('create-article', compact('trainer'));
     }
-    public function submitArticle($id)
+    public function submitArticle(Request $request, $id)
     {
+        $request->validate([
+            'Foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'Judul' => 'required|string|max:255',
+            'Text' => 'required|string',
+        ]);
+        
+        $imageContent = file_get_contents($request->file('Foto'));
+    
+        // Generate a unique filename for the image
+        $filename = 'article_' . uniqid() . '.jpg';
+    
+        // Save the image to the storage disk
+        Storage::put('public/article_images/' . $filename, $imageContent);
+        
+        $results = [
+            'trainer_id' => $id,
+            'Foto' => $filename,
+            'Judul' => $request->input('Judul'),
+            'Text' => $request->input('Text')
+        ];
+        Article::where('trainer_id', $id)->create($results);
 
+        return redirect()->route('list-myarticles');
     }
 }

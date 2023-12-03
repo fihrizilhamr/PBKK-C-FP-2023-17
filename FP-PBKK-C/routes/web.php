@@ -36,12 +36,14 @@ Route::get('/auth', function () {
 
 Route::get('/listarticles', [ArticleController::class, 'showArticles'])->name('list-articles');
 Route::get('/viewarticle/{id}', [ArticleController::class, 'view'])->name('article.view');
-Route::get('/editarticle/{id}', [ArticleController::class, 'edit'])->name('article.edit');
-Route::post('/updatearticle/{id}', [ArticleController::class, 'update'])->name('article.update');
-Route::get('/deletearticle/{id}', [ArticleController::class,'delete'])->name('article.delete');
 
-Route::get('/createarticle/{id}', [ArticleController::class,'createArticle'])->name('article.create');
-Route::post('/createarticle/{id}', [ArticleController::class,'submitArticle'])->name('article.submit');
+Route::get('/myarticles', [ArticleController::class, 'myArticle'])->name('list-myarticles');
+Route::get('/myarticle/edit/{id}', [ArticleController::class, 'editArticle'])->name('article.edit');
+Route::put('/myarticle/update/{id}', [ArticleController::class, 'updateArticle'])->name('article.update');
+Route::get('/myarticle/delete/{id}', [ArticleController::class,'deleteArticle'])->name('article.delete');
+
+Route::get('/myarticle/create', [ArticleController::class,'createArticle'])->name('article.create');
+Route::post('/myarticle/submit/{id}', [ArticleController::class,'submitArticle'])->name('article.submit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -60,6 +62,10 @@ Route::middleware('auth')->group(function () {
     // Trainer list
     Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
     Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
+    
+
+
+
     
     Route::post('/checkout', [PaymentController::class, 'showCheckout'])->name('checkout-trainer');
 

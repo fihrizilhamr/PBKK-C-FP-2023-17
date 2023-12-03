@@ -19,19 +19,23 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="createarticle">
         <h2>Create Article</h2>
-        <form action="{{ route('store-article') }}" method="POST" enctype="multipart/form-data">
+        <p>Hai {{ $trainer->name }}! Kamu mau membuat artikel?</p>
+        <form action="{{ route('article.submit', $trainer->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
 
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" rows="6" required></textarea>
+            <label for="Judul">Title:</label>
+            <input type="text" id="Judul" name="Judul" required>
 
-            <label for="image">Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
+            <label for="Text">Content:</label>
+            <textarea id="Text" name="Text" rows="6" required></textarea>
 
+            <label for="Foto">Image:</label>
+            <input type="file" id="Foto" name="Foto" accept="image/*" required>
+
+
+            <br>
             <button type="submit">Create Article</button>
         </form>
     </div>
