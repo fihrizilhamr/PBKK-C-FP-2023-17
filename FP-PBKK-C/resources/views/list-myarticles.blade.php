@@ -50,7 +50,8 @@
                 @endforeach
             </ul>
         @else
-            <p>No articles available.</p>
+        <br><br><br>
+            <p>...No articles available.</p>
         @endif
     </div>
 </div>

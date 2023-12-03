@@ -627,15 +627,18 @@ input[type="text"]{
 
 .listarticles h3 {
     color: #333;
+    text-align: center;
 }
 
 .listarticles p {
     color: #555;
+    text-align: center;
 }
 
 .listarticles .article-actions {
     margin-top: 10px;
     text-align: center;
+    justify-content: center; /* Mengatur tombol di tengah */
 }
 
 .listarticles .create-button,
@@ -655,13 +658,31 @@ input[type="text"]{
 .listarticles .edit-button {
     background-color: #1E90FF; /* Ganti warna sesuai kebutuhan */
     border: 1px solid #1E90FF;
+    align-items: center;
+    align-self: center;
 }
 
 .listarticles .delete-button {
     background-color: #FF4500; /* Ganti warna sesuai kebutuhan */
     border: 1px solid #FF4500;
+    align-items: center;
+    align-self: center;
+}
+.listarticles table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
+.listarticles th, .listarticles td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.listarticles th {
+    background-color: #f2f2f2;
+}
 /* Style dasar untuk container */
 .createarticle {
     max-width: 600px;
@@ -739,6 +760,23 @@ input[type="text"]{
     margin: 0 auto; /* Membuat gambar berada di tengah */
     margin-bottom: 20px; /* Atur spasi bawah jika diinginkan */
 }
+
+
+.createarticle label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Gaya input */
+.createarticle input[type="time"], .createarticle select {
+    padding: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
 #checkout-button {
     display: block;
     background-color: #3498db; /* Button color */
@@ -760,4 +798,56 @@ input[type="text"]{
 .jadwal-container {
     text-align: center;
     align-items: center;
+}
+
+.myschedule {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.myschedule h1 {
+    color: #1e3a56;
+    text-align: center;
+}
+
+.myschedule table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.myschedule table th, .myschedule table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.myschedule table th {
+    background-color: #1e3a56;
+    color: #fff;
+}
+
+.myschedule p {
+    color: #1e3a56;
+    text-align: center;
+}
+
+.alert {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.alert ul {
+    margin-bottom: 0;
+    padding-left: 1.5em;
+    list-style-position: inside;
+}
+
+.alert li {
+    margin-bottom: .25em;
 }

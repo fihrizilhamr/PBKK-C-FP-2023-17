@@ -23,7 +23,7 @@ class TrainerController extends Controller
 
     public function pickTrainer($id)
     {
-        $trainer = Trainer::find($id)->with('user')->with('schedules')->first();
+        $trainer = Trainer::find($id);
     // dd($trainer); // Check the retrieved data
         return view('jadwal-trainer', compact('trainer'));
     }

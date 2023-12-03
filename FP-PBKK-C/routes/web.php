@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ScheduleController;
 use App\Models\Article;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -48,9 +49,17 @@ Route::get('/myarticles', [ArticleController::class, 'myArticle'])->name('list-m
 Route::get('/myarticle/edit/{id}', [ArticleController::class, 'editArticle'])->name('article.edit');
 Route::put('/myarticle/update/{id}', [ArticleController::class, 'updateArticle'])->name('article.update');
 Route::get('/myarticle/delete/{id}', [ArticleController::class,'deleteArticle'])->name('article.delete');
-
 Route::get('/myarticle/create', [ArticleController::class,'createArticle'])->name('article.create');
 Route::post('/myarticle/submit/{id}', [ArticleController::class,'submitArticle'])->name('article.submit');
+
+Route::get('/myschedules', [ScheduleController::class, 'mySchedule'])->name('list-myschedules');
+Route::get('/myschedule/edit/{id}', [ScheduleController::class, 'editSchedule'])->name('schedule.edit');
+Route::put('/myschedule/update/{id}', [ScheduleController::class, 'updateSchedule'])->name('schedule.update');
+Route::get('/myschedule/delete/{id}', [ScheduleController::class,'deleteSchedule'])->name('schedule.delete');
+Route::get('/myschedule/create', [ScheduleController::class,'createSchedule'])->name('schedule.create');
+Route::post('/myschedule/submit/{id}', [ScheduleController::class,'submitSchedule'])->name('schedule.submit');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

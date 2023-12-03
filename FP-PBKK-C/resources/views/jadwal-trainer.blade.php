@@ -66,7 +66,7 @@
     </table>
 
     <br><br>
-
+    @if($trainer->schedules->count() > 0)
     <div class="listTable">
         <table id="userTable">
             <thead>
@@ -96,7 +96,9 @@
                 @endforeach
             </tbody>
         </table>
-
+        @else
+            <p>No schedules available.</p>
+        @endif
 
 
         <br>
