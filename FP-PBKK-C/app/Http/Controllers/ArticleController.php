@@ -7,12 +7,19 @@ use App\Models\Trainer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
     public function showArticles(){
-        $articles = Article::all();
+        if (Cache::has('articles')) {
+            $articles = Cache::get('articles');
+        } else {
+            // Jika tidak, ambil dari database dan simpan ke dalam cache
+            $articles = Article::all();
+            Cache::put('articles', $articles, 1440); // Cache dengan durasi 24 jam
+        }
         return view('list-articles', compact('articles'));
     }
 

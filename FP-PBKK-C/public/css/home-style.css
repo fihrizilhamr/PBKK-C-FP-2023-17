@@ -512,6 +512,7 @@ input[type="text"]{
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #userTable th, #userTable td {
@@ -737,4 +738,26 @@ input[type="text"]{
     display: block; /* Hilangkan whitespace ekstra di sekitar gambar */
     margin: 0 auto; /* Membuat gambar berada di tengah */
     margin-bottom: 20px; /* Atur spasi bawah jika diinginkan */
+}
+#checkout-button {
+    display: block;
+    background-color: #3498db; /* Button color */
+    color: #ffffff; /* Text color */
+    padding: 10px 20px; /* Padding around text */
+    font-size: 16px; /* Font size */
+    border: none; /* Remove border */
+    cursor: pointer; /* Add pointer cursor on hover */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    margin: 0 auto; /* Center the button horizontally */
+    margin-top: 20px; /* Add some top margin for separation */
+}
+
+/* Hover effect */
+#checkout-button:hover {
+    background-color: #2980b9; /* Change color on hover */
+}
+
+.jadwal-container {
+    text-align: center;
+    align-items: center;
 }

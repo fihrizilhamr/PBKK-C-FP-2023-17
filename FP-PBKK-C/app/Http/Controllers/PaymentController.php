@@ -9,8 +9,8 @@ use App\Models\Payment;
 
 class PaymentController extends Controller
 {
-    public function showCheckout(){
-        return view("checkout", []);
+    public function showCheckout($count){
+        return view("checkout");
     }
 
     public function __construct() {

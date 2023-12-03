@@ -20,13 +20,13 @@ class UserFactory extends Factory
         $gender = $this->faker->randomElement(['male', 'female']);
         $nama = $this->faker->name($gender);
         return [
-            'name' => fake()->name(),
+            'name' => $nama,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'birthdate' => $this->faker->dateTimeBetween('1970-01-01', '2010-12-31')->format('Y-m-d'),
             'address' => $this->faker->address,
             'phone_number' => $this->faker->phoneNumber,
-            'gender' => $gender,
+            'Gender' => ($gender == 'male')?'Male':'Female',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];

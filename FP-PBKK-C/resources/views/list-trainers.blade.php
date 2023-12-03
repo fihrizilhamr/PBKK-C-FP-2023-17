@@ -42,7 +42,7 @@
         @foreach($trainers as $trainer)
             <div class="trainer">
             <img src="{{ asset('storage/trainer_images/' . $trainer->Foto) }}" alt="{{ asset('storage/trainer_images/' . $trainer->Foto) }}">
-                <a href="{{ route('pick-trainer', ['id' => $trainer->id]) }}"><h4>{{ $trainer->Nama }}</h4></a>
+                <a href="{{ route('pick-trainer', ['id' => $trainer->id]) }}"><h4>{{ $trainer->user->name }}</h4></a>
                 <p>{{ $trainer->Lokasi }}</p>
             </div>
         @endforeach

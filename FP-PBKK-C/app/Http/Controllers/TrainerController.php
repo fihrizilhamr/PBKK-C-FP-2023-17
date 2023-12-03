@@ -3,22 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trainer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TrainerController extends Controller
 {
     //
     public function showTrainers(){
-        $trainers = Trainer::all(); // Retrieve all trainers (you might want to paginate or use a specific query)
-
+        if (Cache::has('trainers')) {
+            $trainers = Cache::get('trainers');
+        } else {
+            // Jika tidak, ambil dari database dan simpan ke dalam cache
+            $trainers = Trainer::with('user')->get();
+            Cache::put('trainers', $trainers, 10800); // Cache dengan durasi 1 minggu
+        }
         return view('list-trainers', compact('trainers'));
     }
 
     public function pickTrainer($id)
     {
-        $trainer = Trainer::find($id);
+        $trainer = Trainer::find($id)->with('user')->with('schedules')->first();
+    // dd($trainer); // Check the retrieved data
         return view('jadwal-trainer', compact('trainer'));
     }
+    
 
 
 }

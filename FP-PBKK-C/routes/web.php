@@ -7,6 +7,7 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\PaymentController;
 use App\Models\Article;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    $latestArticles = Article::latest()->take(3)->get();
+    if (Cache::has('newest_articles')) {
+        $latestArticles = Cache::get('newest_articles');
+    } else {
+        // Jika tidak, ambil tiga artikel terbaru dari database dan simpan ke dalam cache
+        $latestArticles = Article::latest()->take(3)->get();
+        Cache::put('newest_articles', $latestArticles, 1440); // Cache dengan durasi 24 jam
+    }
     
     return view('home', ['latestArticles' => $latestArticles]);
 })->name('home');
@@ -67,7 +74,7 @@ Route::middleware('auth')->group(function () {
 
 
     
-    Route::post('/checkout', [PaymentController::class, 'showCheckout'])->name('checkout-trainer');
+    Route::post('/checkout/{$id}', [PaymentController::class, 'showCheckout'])->name('checkout-trainer');
 
     Route::post('/payment/{id}', [PaymentController::class, 'createPayment']);
     Route::get('/payment-status/{id}', [PaymentController::class, 'showStatus']);
