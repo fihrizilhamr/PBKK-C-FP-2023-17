@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('members', function (Blueprint $table) {
+        Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->decimal('tinggi_badan', 8, 2); // Use decimal instead of numeric
-            $table->decimal('berat_badan', 8, 2); // Use decimal instead of numeric
+            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('trainer_id');
             $table->timestamps();
+            $table->foreign('trainer_id')->references('id')->on('trainers')->onDelete('cascade');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
+
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('members');
+        Schema::dropIfExists('chats');
     }
 };

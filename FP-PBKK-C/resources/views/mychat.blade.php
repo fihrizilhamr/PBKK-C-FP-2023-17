@@ -11,7 +11,7 @@
   <!-- End JavaScript -->
 
   <!-- CSS -->
-  <link rel="stylesheet" href="css/chat-style.css">
+  <link rel="stylesheet" href="{{ asset('/css/chat-style.css') }}">
   <!-- End CSS -->
 
 </head>
@@ -21,19 +21,22 @@
 
   <!-- Header -->
   <div class="top">
-    <img src="https://assets.edlin.app/images/rossedlin/03/rossedlin-03-100.jpg" alt="Avatar">
+  <img src="{{ asset('storage/trainer_images/' . $gambar) }}" alt="Avatar">
     <div>
-      <p>Ross Edlin</p>
+      <p>{{$lawanBicara -> name}}</p>
       <small>Online</small>
+      
     </div>
   </div>
   <!-- End Header -->
 
   <!-- Chat -->
   <div class="messages">
-    @include('receive', ['message' => "Hey! What's up!  👋", 'timestamp' => now()])
-    @include('receive', ['message' => "Ask a friend to open this link and you can chat with them!", 'timestamp' => now()])
+
+    @include('receive', ['message' => "Hey! What's up!  👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "default.png"])
+    @include('broadcast', ['message' => "Helo! 👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "default.png"])
 </div>
+
 
 
   <!-- End Chat -->
@@ -41,6 +44,7 @@
   <!-- Footer -->
   <div class="bottom">
     <form>
+    @csrf
       <input type="text" id="message" name="message" placeholder="Enter message..." autocomplete="off">
       <button type="submit"></button>
     </form>
@@ -50,25 +54,47 @@
 </div>
 </body>
 
-<script>
-  const pusher = new Pusher('{{config('broadcasting.connections.pusher.key')}}', {cluster: 'ap1'});
+<script type="module">
+    // Your script code here
+    const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', { cluster: 'ap1' });
+    const userId1 = parseInt("{{ $userId1 ?? '0' }}");
+    const userId2 = parseInt("{{ $userId2 ?? '0' }}");
+    let userNih = ("{{ $check }}" == 0) ? userId1 : userId2;
 
-  const channel = pusher.subscribe('public');
+    console.log("{{ $gambar }}");
+    console.log("{{ $check }}");
+    console.log("User ID 1:", userId1);
+    console.log("User ID 2:", userId2);
 
-  // Receive messages
-channel.bind('chat', function (data) {
-    console.log('Received message data:', data);
+    import Echo from 'https://cdn.jsdelivr.net/npm/laravel-echo@1.11.1/dist/echo.js';
 
-    $.post("/receive", {
-        _token:  '{{ csrf_token() }}',
-        message: data.message,
-        timestamp: data.timestamp,
-    }).done(function (res) {
-        console.log('Server response for receive:', res);
-        $(".messages > .message").last().after(res);
-        $(document).scrollTop($(document).height());
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '25f9d000964cd1649bff',
+        cluster: 'ap1',
+        encrypted: true,
+        logToConsole: true,
     });
-});
+
+// revceive messages
+    window.Echo.private('private-chat.' + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2))
+    .listen('.chat', (data) => {
+        // console.log('Event triggered!');
+        console.log(data);
+        $.post("/receive/" + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2), {
+            _token: data._token,
+            message: data.message,
+            timestamp: data.timestamp,
+        }).done(function (res) {
+            console.log('Server response for receive:', res);
+            $(".messages > .message").last().after(res);
+            $(document).scrollTop($(document).height());
+        });
+        // .fail(function (error) {
+        //     console.error('Error in $.post for receive:', error);
+        // });
+      });
+
 
 // Broadcast messages
 $("form").submit(function (event) {
@@ -77,16 +103,17 @@ $("form").submit(function (event) {
     console.log('Sending message:', $("form #message").val());
 
     $.ajax({
-        url:     "/broadcast",
+        url:     "/broadcast/" + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2),
         method:  'POST',
         headers: {
             'X-Socket-Id': pusher.connection.socket_id
         },
-        data:    {
-            _token:  '{{ csrf_token() }}',
+        data: {
+            _token: '{{ csrf_token() }}',
             message: $("form #message").val(),
             timestamp: new Date().toLocaleString(),
         }
+
     }).done(function (res) {
         console.log('Server response for broadcast:', res);
         $(".messages > .message").last().after(res);

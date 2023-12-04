@@ -6,53 +6,62 @@ use Illuminate\Http\Request;
 use Xendit\Xendit;
 use Illuminate\Support\Str;
 use App\Models\Payment;
+use App\Models\Schedule;
+use App\Models\Trainer;
 
 class PaymentController extends Controller
 {
-    public function showCheckout($count){
-        return view("checkout");
+    public function showCheckout(Request $request, $trainer_id)
+    {
+        $trainer = Trainer::find($trainer_id);
+        $selectedSchedulesCount = $request->input('selectedSchedulesCount');
+        $selectedSchedulesIds = explode(',', $request->input('selectedSchedulesIds'));
+        $selectedSchedules = Schedule::whereIn('id', $selectedSchedulesIds)->get();
+        $totalPrice = $selectedSchedulesCount*50000;
+        // ... (your checkout logic)
+        return view("checkout", compact('trainer', 'selectedSchedulesCount', 'selectedSchedules', 'totalPrice'));
     }
 
-    public function __construct() {
-       Xendit::setApiKey("xnd_development_cZzH2SbZQ98KkfhCQVyVXtcjxAmUp08MpHIf1wapxoaQxkgshD7tMJE84ezKvi");
-    }
+    // public function __construct() {
+    //    Xendit::setApiKey("xnd_development_cZzH2SbZQ98KkfhCQVyVXtcjxAmUp08MpHIf1wapxoaQxkgshD7tMJE84ezKvi");
+    // }
 
-    public function create(Request $request){
+    // public function create(Request $request){
 
-        $params = [
-            'external_id' => (string) Str::uuid(),
-            'payer_email' => $request->payer_email,
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'redirect_url' => 'faerul.com'
-        ];
+    //     $params = [
+    //         'external_id' => (string) Str::uuid(),
+    //         'payer_email' => $request->payer_email,
+    //         'description' => $request->description,
+    //         'amount' => $request->amount,
+    //         'redirect_url' => 'faerul.com'
+    //     ];
 
-        $createInvoice = \Xendit\Invoice::create($params);
+    //     $createInvoice = \Xendit\Invoice::create($params);
 
-        // Save to database
-        $payment = new Payment;
-        $payment->status = 'pending';
-        $payment->checkout_link = $createInvoice['invoice_url'];
-        $payment->external_id = $params['external_id'];
-        $payment->save();
+    //     // Save to database
+    //     $payment = new Payment;
+    //     $payment->status = 'pending';
+    //     $payment->checkout_link = $createInvoice['invoice_url'];
+    //     $payment->external_id = $params['external_id'];
+    //     $payment->save();
 
-        return response()->json(['data' => $createInvoice['invoice_url']]);
-    }
+    //     return response()->json(['data' => $createInvoice['invoice_url']]);
+    // }
 
-    public function webhook(Request $request){
-        $getInvoice = \Xendit\Invoice::retrieve($request->id);
+    // public function webhook(Request $request){
+    //     $getInvoice = \Xendit\Invoice::retrieve($request->id);
 
-        // Get data
-        $payment = Payment::where('external_id',$request->external_id)->firstOrFail();
+    //     // Get data
+    //     $payment = Payment::where('external_id',$request->external_id)->firstOrFail();
 
-        if ($payment->status == 'settled'){
-            return response()->json(['data' => 'Payment has been already processed']);
-        }
+    //     if ($payment->status == 'settled'){
+    //         return response()->json(['data' => 'Payment has been already processed']);
+    //     }
 
-        // Update status payment
-        $payment->status = strtolower($getInvoice['status']);
-        $payment->save();
+    //     // Update status payment
+    //     $payment->status = strtolower($getInvoice['status']);
+    //     $payment->save();
 
-        return response()->json(['data' => 'Success']);
-    }
+    //     return response()->json(['data' => 'Success']);
+    // }
 }

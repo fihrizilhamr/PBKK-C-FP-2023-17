@@ -59,9 +59,13 @@ Route::get('/myschedule/delete/{id}', [ScheduleController::class,'deleteSchedule
 Route::get('/myschedule/create', [ScheduleController::class,'createSchedule'])->name('schedule.create');
 Route::post('/myschedule/submit/{id}', [ScheduleController::class,'submitSchedule'])->name('schedule.submit');
 
-Route::get('/mychat', 'App\Http\Controllers\PusherController@index')->name('chat');
-Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
-Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
+Route::get('/mychat','App\Http\Controllers\PusherController@listChat')->name('list-chats');
+Route::get('/mychat/create/{trainer}','App\Http\Controllers\PusherController@createChat')->name('chat.create');
+
+Route::get('/mychat/{userId1}.{userId2}', 'App\Http\Controllers\PusherController@index')->name('chat');
+Route::post('/broadcast/{userId1}.{userId2}', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
+Route::post('/receive/{userId1}.{userId2}', 'App\Http\Controllers\PusherController@receive')->name('receive');
+Route::post('/pusher/auth', 'App\Http\Controllers\PusherController@auth')->name('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -85,7 +89,7 @@ Route::middleware('auth')->group(function () {
 
 
     
-    Route::post('/checkout/{$id}', [PaymentController::class, 'showCheckout'])->name('checkout-trainer');
+    Route::post('/checkout/{trainer_id}', [PaymentController::class, 'showCheckout'])->name('checkout');
 
     Route::post('/payment/{id}', [PaymentController::class, 'createPayment']);
     Route::get('/payment-status/{id}', [PaymentController::class, 'showStatus']);

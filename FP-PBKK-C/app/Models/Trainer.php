@@ -31,4 +31,9 @@ class Trainer extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

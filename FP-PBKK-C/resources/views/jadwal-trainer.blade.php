@@ -11,24 +11,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const checkboxes = document.querySelectorAll('.schedule-checkbox');
-                const button = document.querySelector('#checkout-button');
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.schedule-checkbox');
+            const button = document.querySelector('#checkout-button');
 
-                checkboxes.forEach(function (checkbox) {
-                    checkbox.addEventListener('change', function () {
-                        const selectedSchedulesCount = document.querySelectorAll('.schedule-checkbox:checked').length;
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    const selectedSchedules = document.querySelectorAll('.schedule-checkbox:checked');
+                    const selectedSchedulesCount = selectedSchedules.length;
 
-                        if (selectedSchedulesCount < 1) {
-                            alert('Please select at least one schedule.');
-                            button.style.display = 'none';
-                        } else {
-                            button.style.display = 'block';
-                        }
-                    });
+                    if (selectedSchedulesCount < 1) {
+                        alert('Please select at least one schedule.');
+                        button.style.display = 'none';
+                    } else {
+                        button.style.display = 'block';
+                    }
+
+                    const selectedSchedulesIds = Array.from(selectedSchedules).map(checkbox => checkbox.value);
+                    document.querySelector('#selectedSchedulesCount').value = selectedSchedulesCount;
+                    document.querySelector('#selectedSchedulesIds').value = selectedSchedulesIds.join(',');
                 });
             });
-        </script>
+        });
+    </script>
 <body>
     <nav>
         <div class="wrapper">
@@ -105,10 +110,19 @@
 
         
     </div>
-    <button id="checkout-button" style="display: none">
-            <!-- Add your button content here -->
+    <form action="{{ route('checkout', ['trainer_id' => $trainer->id]) }}" method="post">
+        @csrf <!-- Laravel CSRF token -->
+        <!-- ... (existing content) ... -->
+
+        
+        <input type="hidden" name="selectedSchedulesCount" id="selectedSchedulesCount">
+        <input type="hidden" name="selectedSchedulesIds" id="selectedSchedulesIds">
+
+
+        <button id="checkout-button" style="display: none" type="submit">
             Checkout
-    </button>
+        </button>
+    </form>
     </div>
         <br>
         <br>

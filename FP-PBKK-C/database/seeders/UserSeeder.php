@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Article;
+use App\Models\Member;
 use App\Models\Schedule;
 use App\Models\Trainer;
 use App\Models\User;
@@ -18,10 +20,21 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->count(10)
-            ->has(Trainer::factory()
-                ->has(Schedule::factory()->count(3))
-                ->has(Article::factory()->count(3))
-            )
-            ->create();
+            ->create()
+            ->each(function ($user) {
+                $role = \Faker\Provider\Base::randomElement(['admin', 'member', 'trainer']);
+
+                if ($role === 'admin') {
+                    Admin::factory()->create(['user_id' => $user->id]);
+                } elseif ($role === 'member') {
+                    Member::factory()->create(['user_id' => $user->id]);
+                } else {
+                    Trainer::factory()
+                        ->has(Schedule::factory()->count(3))
+                        ->has(Article::factory()->count(3))
+                        ->create(['user_id' => $user->id]);
+                }
+            });
     }
+
 }
