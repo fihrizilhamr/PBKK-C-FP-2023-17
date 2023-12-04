@@ -59,7 +59,9 @@ Route::get('/myschedule/delete/{id}', [ScheduleController::class,'deleteSchedule
 Route::get('/myschedule/create', [ScheduleController::class,'createSchedule'])->name('schedule.create');
 Route::post('/myschedule/submit/{id}', [ScheduleController::class,'submitSchedule'])->name('schedule.submit');
 
-
+Route::get('/mychat', 'App\Http\Controllers\PusherController@index')->name('chat');
+Route::post('/broadcast', 'App\Http\Controllers\PusherController@broadcast')->name('broadcast');
+Route::post('/receive', 'App\Http\Controllers\PusherController@receive')->name('receive');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
