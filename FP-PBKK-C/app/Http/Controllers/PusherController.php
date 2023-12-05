@@ -32,15 +32,33 @@ class PusherController extends Controller
         $check =($user == $user1) ? 0 : 1;
         $enemy = ($user == $user1) ? $user2 : $user1;
         $gambar = "default.png";
-        if ($check == 0) {
-            $gambar = $user2->trainer->Foto;
+        if ($user->trainer){
+            $gambar = "default.png";
+            if ($check == 0){
+                $gambarku = $user1->trainer->Foto;
+            }
+            else {
+                $gambarku = $user2->trainer->Foto;
+            }
         }
+        else {
+            if ($check == 0){
+            $gambar = $user2->trainer->Foto;
+            $gambarku = "default.png";
+            }
+            else {
+                $gambar = $user1->trainer->Foto;
+                $gambarku = "default.png";
+            }
+        }
+        
         return view('mychat', [
             'userId1' => $userId1,
             'userId2' => $userId2,
             'check' => $check,
             'lawanBicara' => $enemy,
             'gambar' =>$gambar,
+            'gambarku' => $gambarku,
         ]);
     }
 
@@ -52,11 +70,19 @@ class PusherController extends Controller
         $check =($user == $user1) ? 0 : 1;
         $enemy = ($user == $user1) ? $user2 : $user1;
         $gambar = "default.png";
-        if ($check == 1) {
+        if ($user->member){
+            $gambar = "default.png";
+        }
+        else {
+            if ($check == 1){
             $gambar = $user2->trainer->Foto;
+            }
+            else {
+                $gambar = $user1->trainer->Foto;
+            }
         }
 
-        broadcast(new PusherBroadcast($request->get('message'), $request->get('timestamp'), $userId1, $userId2))->toOthers();
+        broadcast(new PusherBroadcast($request->get('message'), $request->get('timestamp'), $request->get('sender'), $request->get('receiver')))->toOthers();
 
         return view('broadcast', ['message' => $request->get('message'), 'timestamp' => $request->get('timestamp'), 'gambar' => $gambar]);
     }
@@ -69,8 +95,16 @@ class PusherController extends Controller
         $check =($user == $user1) ? 0 : 1;
         $enemy = ($user == $user1) ? $user2 : $user1;
         $gambar = "default.png";
-        if ($check == 0) {
+        if ($user->trainer){
+            $gambar = "default.png";
+        }
+        else {
+            if ($check == 0){
             $gambar = $user2->trainer->Foto;
+            }
+            else {
+                $gambar = $user1->trainer->Foto;
+            }
         }
         return view('receive', ['message' => $request->get('message'), 'timestamp' => $request->get('timestamp'), 'gambar' => $gambar]);
     }
@@ -81,8 +115,8 @@ class PusherController extends Controller
         $trainerModel = Trainer::find($trainer);
     
         // Check if a chat entry already exists
-        $existingChat = Chat::where('trainer_id', $trainerModel->user->id)
-                            ->where('member_id', $user)
+        $existingChat = Chat::where('trainer_id', $trainerModel->id)
+                            ->where('member_id', $user->id)
                             ->first();
     
         // If no existing chat entry, create a new one

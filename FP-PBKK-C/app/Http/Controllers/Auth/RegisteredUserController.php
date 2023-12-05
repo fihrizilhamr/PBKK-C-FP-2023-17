@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -49,6 +50,12 @@ class RegisteredUserController extends Controller
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
         ]);
+        Member::create([
+            'user_id' => $user->id,
+            'tinggi_badan' => 0.0,
+            'berat_badan' => 0.0,
+        ]);
+        
 
         event(new Registered($user));
 

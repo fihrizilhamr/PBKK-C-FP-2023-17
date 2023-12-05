@@ -34,7 +34,7 @@
   <div class="messages">
 
     @include('receive', ['message' => "Hey! What's up!  👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "default.png"])
-    @include('broadcast', ['message' => "Helo! 👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "default.png"])
+    @include('broadcast', ['message' => "Helo! 👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "$gambarku "])
 </div>
 
 
@@ -60,6 +60,18 @@
     const userId1 = parseInt("{{ $userId1 ?? '0' }}");
     const userId2 = parseInt("{{ $userId2 ?? '0' }}");
     let userNih = ("{{ $check }}" == 0) ? userId1 : userId2;
+    let sender, receiver;
+    let enemy = "{{ $lawanBicara }}"
+    let isBroadcasting = false;
+
+    if("{{ $check }}" === 0){
+      sender = userId1;
+      receiver = userId2;
+    }
+    else {
+      sender = userId2;
+      receiver = userId1;
+    }
 
     console.log("{{ $gambar }}");
     console.log("{{ $check }}");
@@ -77,22 +89,26 @@
     });
 
 // revceive messages
-    window.Echo.private('private-chat.' + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2))
-    .listen('.chat', (data) => {
-        // console.log('Event triggered!');
-        console.log(data);
-        $.post("/receive/" + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2), {
-            _token: data._token,
+window.Echo.private('private-chat.' + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2))
+   .listen('.chat', (data) => {
+    if (isBroadcasting) {
+        console.log("Broadcasting is currently paused. Messages will not be sent.");
+        isBroadcasting = false;
+        return;
+    }
+            $.post("/receive/"+ Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2), {
+            _token:  '{{ csrf_token() }}',
             message: data.message,
             timestamp: data.timestamp,
-        }).done(function (res) {
+        })
+        .done(function (res) {
+        if ( enemy !== data.sender) {
             console.log('Server response for receive:', res);
             $(".messages > .message").last().after(res);
             $(document).scrollTop($(document).height());
-        });
-        // .fail(function (error) {
-        //     console.error('Error in $.post for receive:', error);
-        // });
+          }
+      });
+
       });
 
 
@@ -101,10 +117,11 @@ $("form").submit(function (event) {
     event.preventDefault();
 
     console.log('Sending message:', $("form #message").val());
+    isBroadcasting = true; // Set the flag
 
     $.ajax({
-        url:     "/broadcast/" + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2),
-        method:  'POST',
+        url: "/broadcast/" + Math.min(userId1, userId2) + '.' + Math.max(userId1, userId2),
+        method: 'POST',
         headers: {
             'X-Socket-Id': pusher.connection.socket_id
         },
@@ -112,17 +129,17 @@ $("form").submit(function (event) {
             _token: '{{ csrf_token() }}',
             message: $("form #message").val(),
             timestamp: new Date().toLocaleString(),
+            sender: sender,
+            receiver: receiver,
         }
-
     }).done(function (res) {
         console.log('Server response for broadcast:', res);
         $(".messages > .message").last().after(res);
         $("form #message").val('');
         $(document).scrollTop($(document).height());
+
     });
 });
-
-
 
 </script>
 </html>

@@ -15,21 +15,21 @@ class PusherBroadcast implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public string $message, $timestamp;
-    public int $user1, $user2;
+    public int $sender, $receiver;
 
 
-    public function __construct($message, $timestamp, $user1, $user2)
+    public function __construct($message, $timestamp, $sender, $receiver)
     {
         $this->message = $message;
         $this->timestamp = $timestamp;
-        $this->user1 = $user1;
-        $this->user2 = $user2;
+        $this->sender = $sender;
+        $this->receiver = $receiver;
     }
 
     public function broadcastOn(): Channel
     {
         // Assuming $user1 and $user2 are the IDs of the two users in the chat
-        $channelName = 'private-chat.' . min($this->user1, $this->user2) . '.' . max($this->user1, $this->user2);
+        $channelName = 'private-chat.' . min($this->sender, $this->receiver) . '.' . max($this->sender, $this->receiver);
 
         return new PrivateChannel($channelName);
     }

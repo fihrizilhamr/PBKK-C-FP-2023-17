@@ -21,13 +21,7 @@
         }
     </script>
 <body>
-    <nav>
-        <div class="wrapper">
-            <div class="logo">
-                <a href="{{ route('list-myschedules') }}">GoGym</a>
-            </div>
-        </div>
-    </nav>
+@include('layouts.home-navbar')
 
     <div class="createarticle">
         <h2>Create Schedule</h2>

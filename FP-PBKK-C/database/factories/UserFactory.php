@@ -21,7 +21,7 @@ class UserFactory extends Factory
         $nama = $this->faker->name($gender);
         return [
             'name' => $nama,
-            'email' => fake()->unique()->safeEmail(),
+            'email' => strtolower(str_replace(' ', '', $nama)) . '@mail.com',
             'email_verified_at' => now(),
             'birthdate' => $this->faker->dateTimeBetween('1970-01-01', '2010-12-31')->format('Y-m-d'),
             'address' => $this->faker->address,

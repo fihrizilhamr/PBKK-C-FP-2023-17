@@ -15,13 +15,7 @@
 </head>
 
 <body>
-<nav>
-        <div class="wrapper">
-            <div class="logo">
-                <a href="{{ route('list-articles') }}">GoGym</a>
-            </div>
-        </div>
-    </nav>
+@include('layouts.home-navbar')
     <div class="checkout-container">
         <h1>Checkout</h1>
 

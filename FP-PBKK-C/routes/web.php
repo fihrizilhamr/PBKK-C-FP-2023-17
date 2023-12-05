@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BMIController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\PaymentController;
@@ -35,8 +36,8 @@ Route::get('/', function () {
     return view('home', ['latestArticles' => $latestArticles]);
 })->name('home');
 
-Route::get('/signup', [SignUpController::class, 'showForm'])->name('signup');
-Route::post('/signup', [SignUpController::class, 'submitForm']);
+// Route::get('/signup', [SignUpController::class, 'showForm'])->name('signup');
+// Route::post('/signup', [SignUpController::class, 'submitForm']);
 
 Route::get('/auth', function () {
     return view('welcome');
@@ -45,6 +46,29 @@ Route::get('/auth', function () {
 Route::get('/listarticles', [ArticleController::class, 'showArticles'])->name('list-articles');
 Route::get('/viewarticle/{id}', [ArticleController::class, 'view'])->name('article.view');
 
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('/listusers', [AuthController::class, 'showUsers'])->name('list-users');
+    Route::get('/listusers/create', [AuthController::class, 'create'])->name('user.create');
+    Route::get('/listusers/edit/{id}', [AuthController::class, 'edit'])->name('user.edit');
+    Route::put('/listusers/update/{id}', [AuthController::class, 'update'])->name('user.update');
+    Route::get('/listusers/delete/{id}', [AuthController::class,'delete'])->name('user.delete');
+    Route::post('/listusers/submit', [AuthController::class, 'submit'])->name('user.submit');
+
+    // Trainer list
+    Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
+    Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
+    
+
+    
 Route::get('/myarticles', [ArticleController::class, 'myArticle'])->name('list-myarticles');
 Route::get('/myarticle/edit/{id}', [ArticleController::class, 'editArticle'])->name('article.edit');
 Route::put('/myarticle/update/{id}', [ArticleController::class, 'updateArticle'])->name('article.update');
@@ -67,29 +91,9 @@ Route::post('/broadcast/{userId1}.{userId2}', 'App\Http\Controllers\PusherContro
 Route::post('/receive/{userId1}.{userId2}', 'App\Http\Controllers\PusherController@receive')->name('receive');
 Route::post('/pusher/auth', 'App\Http\Controllers\PusherController@auth')->name('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    Route::get('/listusers', [AuthController::class, 'showUsers'])->name('list-users');
-    Route::get('/edit/{id}', [AuthController::class, 'edit'])->name('user.edit');
-    Route::post('/update/{id}', [AuthController::class, 'update'])->name('user.update');
-    Route::get('/delete/{id}', [AuthController::class,'delete'])->name('user.delete');
-
-    // Trainer list
-    Route::get('/listtrainers', [TrainerController::class, 'showTrainers'])->name('list-trainers');
-    Route::get('/picktrainer/{id}', [TrainerController::class, 'pickTrainer'])->name('pick-trainer');
-    
-
-
-
     
     Route::post('/checkout/{trainer_id}', [PaymentController::class, 'showCheckout'])->name('checkout');
+    Route::post('/bmi/calculate', [BMIController::class, 'calculate'])->name('bmi.calculate');
 
     Route::post('/payment/{id}', [PaymentController::class, 'createPayment']);
     Route::get('/payment-status/{id}', [PaymentController::class, 'showStatus']);

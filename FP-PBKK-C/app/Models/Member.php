@@ -9,7 +9,7 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable =  ['user_id',
         'tinggi_badan',
         'berat_badan',
     ];

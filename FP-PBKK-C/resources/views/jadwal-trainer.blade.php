@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<x-app-layout>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,14 +35,7 @@
         });
     </script>
 <body>
-    <nav>
-        <div class="wrapper">
-            <div class="logo">
-                <a href ="{{ route('list-trainers') }}">GoGym</a>
-            </div>
-        </div>
-    </nav>
-    <div class="jadwal-container ">
+    <div class="jadwal-container">
     <table id="userTable">
         <thead>
             <tr>
@@ -127,5 +120,4 @@
         <br>
         <br>
 
-</body>
-</html>
+    </x-app-layout>

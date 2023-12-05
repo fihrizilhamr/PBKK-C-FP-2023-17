@@ -12,27 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav>
-         <!-- menu dan logo di wrapper -->
-        <div class="wrapper">
-            <!-- logo -->
-            <div class="logo">
-                <a href =''>GoGym</a>
-            </div>
-            <!-- menu navigasi-->
-            <div class="menu">
-                <ul>
-                    <li><a href="#program">Program</a></li>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#community">Community</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="{{ route('signup') }}" class="tombol-biru">Sign Up</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
+<x-app-layout>
     <div class="wrapper">
         <br>
         <div class="blog-heading">
@@ -49,5 +29,7 @@
         @endforeach
         </section>
     </div>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
+</x-app-layout>

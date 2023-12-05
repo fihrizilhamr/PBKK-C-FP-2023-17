@@ -11,12 +11,45 @@
                 </div>
 
                 <!-- Navigation Links -->
+                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    
+                    <x-nav-link :href="route('list-articles')" :active="request()->routeIs('list-articles')">
+                        {{ __('List Articles') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('list-trainers')" :active="request()->routeIs('list-trainers')">
+                        {{ __('List Trainers') }}
+                    </x-nav-link>
+                    @auth
+                        @if(auth()->user()->admin)
+                            <x-nav-link :href="route('list-users')" :active="request()->routeIs('list-users')">
+                                {{ __('List Users') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+
+                    @auth
+                        @if(auth()->user()->trainer)
+                            <x-nav-link :href="route('list-myarticles')" :active="request()->routeIs('list-myarticles')">
+                                {{ __('My Articles') }}
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('list-myschedules')" :active="request()->routeIs('list-myschedules')">
+                                {{ __('My Schedule') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+
+                    <x-nav-link :href="route('list-chats')" :active="request()->routeIs('list-chats')">
+                        {{ __('My Chatrooms') }}
+                    </x-nav-link>
                 </div>
-            </div>
+
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -70,6 +103,25 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-articles')" :active="request()->routeIs('list-articles')">
+                {{ __('List Articles') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-myarticles')" :active="request()->routeIs('list-myarticles')">
+                {{ __('My Articles') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-trainers')" :active="request()->routeIs('list-trainers')">
+                {{ __('List Trainers') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-users')" :active="request()->routeIs('list-users')">
+                {{ __('List Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-myschedules')" :active="request()->routeIs('list-myschedules')">
+                {{ __('My Schedule') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('list-chats')" :active="request()->routeIs('list-chats')">
+                {{ __('My Chatrooms') }}
+            </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->
