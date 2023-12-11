@@ -25,8 +25,8 @@
 
     <div class="createarticle">
         <h2>Create Schedule</h2>
-        <p>Hai {{ $trainer->name }}! Kamu mau membuat jadwal?{{$trainer->id}}</p>
-        <form action="{{ route('schedule.submit', $trainer->id)}}" method="POST" enctype="multipart/form-data" onsubmit="return validateTime()">
+        <p>Hai {{ $trainer->name }}! Kamu mau membuat jadwal?{{$trainer->trainer->id}}</p>
+        <form action="{{ route('schedule.submit', ['id' => $trainer->trainer->id])}}" method="POST" enctype="multipart/form-data" onsubmit="return validateTime()">
             @csrf
             <!-- Tambahkan elemen formulir untuk jadwal, seperti hari, waktu mulai, dan waktu selesai -->
             <label for="day">Hari:</label>

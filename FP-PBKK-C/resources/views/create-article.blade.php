@@ -16,7 +16,7 @@
     <div class="createarticle">
         <h2>Create Article</h2>
         <p>Hai {{ $trainer->name }}! Kamu mau membuat artikel?</p>
-        <form action="{{ route('article.submit', $trainer->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('article.submit', ['id' => $trainer->trainer->id])}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label for="Judul">Title:</label>

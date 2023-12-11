@@ -110,7 +110,7 @@ class ArticleController extends Controller
             'Judul' => $request->input('Judul'),
             'Text' => $request->input('Text')
         ];
-        Article::where('trainer_id', $id)->create($results);
+        Article::create($results);
 
         return redirect()->route('list-myarticles');
     }

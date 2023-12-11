@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Events\PusherBroadcast;
 use App\Models\Chat;
+use App\Models\Conversation;
 use App\Models\Member;
 use App\Models\Trainer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class PusherController extends Controller
@@ -81,6 +83,7 @@ class PusherController extends Controller
                 $gambar = $user1->trainer->Foto;
             }
         }
+        // $this->saveMessage($request->get('message'), $request->get('timestamp'), $request->get('sender'),  $request->get('receiver'));
 
         broadcast(new PusherBroadcast($request->get('message'), $request->get('timestamp'), $request->get('sender'), $request->get('receiver')))->toOthers();
 
@@ -108,6 +111,48 @@ class PusherController extends Controller
         }
         return view('receive', ['message' => $request->get('message'), 'timestamp' => $request->get('timestamp'), 'gambar' => $gambar]);
     }
+
+    private function saveMessage($message, $timestamp, $senderId, $receiverId)
+    {
+        $chat = Chat::where(function ($query) use ($senderId, $receiverId) {
+            $query->where('member_id', $senderId)->where('trainer_id', $receiverId->trainer->id);
+        })->orWhere(function ($query) use ($senderId, $receiverId) {
+            $query->where('member_id', $receiverId)->where('trainer_id', $senderId->trainer->id);
+        });
+        Log::info('Chat Message Data: ' . json_encode([
+            'message' => $message,
+            'timestamp' => $timestamp,
+            'senderId' => $senderId,
+            'receiverId' => $receiverId,
+
+            'chat' => $chat
+        ]));
+        
+    
+        if (!$chat) {
+            // Handle the case when the chat entry doesn't exist
+            return;
+        }
+    
+        // Determine whether the sender is a trainer or not
+        $isTrainerSender = $senderId->trainer;
+    
+        // Save the message to the database
+        $chatMessageData = [
+            'chat_id' => $chat->id,
+            'trainer_message' => $isTrainerSender ? $message : null,
+            'member_message' => $isTrainerSender ? null : $message,
+            'timestamp' => $timestamp,
+        ];
+    
+        // Log the data
+        Log::info('Chat Message Data:', $chatMessageData);
+    
+        Conversation::create($chatMessageData);
+        return;
+    }
+    
+
 
     public function createChat($trainer)
     {

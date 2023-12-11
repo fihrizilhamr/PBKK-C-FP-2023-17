@@ -33,7 +33,7 @@
   <!-- Chat -->
   <div class="messages">
 
-    @include('receive', ['message' => "Hey! What's up!  👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "default.png"])
+    @include('receive', ['message' => "Hey! What's up!  👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "$gambar"])
     @include('broadcast', ['message' => "Helo! 👋", 'timestamp' => now()->format('Y/m/d H:i:s'), 'gambar' => "$gambarku "])
 </div>
 
